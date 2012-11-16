@@ -5,7 +5,7 @@ Lane manager
 Session Manager
 Simulation Manager
 
-
+syncronized function to get size.
 
 volatile means that a static variable can be changed in multiple threads instead of only one thread.  IE the launching thread only if it's not volatile.
 
