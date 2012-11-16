@@ -2,12 +2,10 @@ package lab4;
 
 public class Item {
 
-	/**
-	 * @param args
-	 */
+	//left blank because we don't need to use Item
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
 
+	public Item() {}
 }
