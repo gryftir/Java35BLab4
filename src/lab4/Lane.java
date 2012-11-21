@@ -21,8 +21,12 @@ public class Lane extends Thread {
 	synchronized public void AddtoLane(Customer cust)
 	{
 		queue.addFirst(cust);
+		
 	}
 //TODO synchronized function to add object
 //TODO synchronized function to return current size of Queue
 //TODO needs a synchronized way to update data
 }
+//customer.start();  
+//customer.join();
+//System.currentTimeMillis();
