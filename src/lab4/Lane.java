@@ -1,12 +1,12 @@
 package lab4;
 import java.lang.Thread;
+import java.util.*;
 
 public class Lane extends Thread {
 
 	public final boolean Express;
-	/**
-	 * @param args
-	 */
+	private LinkedList <Customer> queue;
+	
 	public static void main(String[] args) {
 	
 
@@ -16,8 +16,13 @@ public class Lane extends Thread {
 	protected Lane(boolean express)
 	{
 	this.Express = express;
+	this.queue = new LinkedList<Customer>();
+	}
+	synchronized public void AddtoLane(Customer cust)
+	{
+		queue.addFirst(cust);
 	}
 //TODO synchronized function to add object
-//TODO synchronized function to return size of ArrayList
+//TODO synchronized function to return current size of Queue
 //TODO needs a synchronized way to update data
 }
