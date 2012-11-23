@@ -3,7 +3,7 @@ package lab4;
 import java.util.ArrayList;
 
 public class Cart {
-	ArrayList<Item> cartitems;
+	private ArrayList<Item> cartitems;
 
 	public static void main(String[] args) {
 
