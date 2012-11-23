@@ -9,16 +9,14 @@ public class Lane extends Thread {
 	private LinkedList<Customer> queue;
 	private long totallanetime;
 	private int currentitems;
-	private Boolean run;
 
 	public static void main(String[] args) {
-
+		
 	}
 
-	protected Lane(boolean express, Boolean run) {
+	protected Lane(boolean express) {
 		this.Express = express;
 		this.queue = new LinkedList<Customer>();
-		this.run = run;
 		this.totallanetime = 0;
 	}
 
@@ -56,12 +54,20 @@ synchronized void processCustomer()
 		e.printStackTrace();
 	}
 	this.setCurrentItems(this.getCurrentItems() - c.size());
-	this.setTotallanetime(this.getTotallanetime() + c.getTotaltime());
+	long printtime = c.getTotaltime();
+	this.setTotallanetime(this.getTotallanetime() + printtime);
+	System.out.println("time is: "+ printtime);
+	if (c.getTotaltime() <= 0)
+	{
+		System.out.println("error with processing total time from a customer.");
+	}
+	
 	c = null;
 }
 public void run()
 {
-		while(this.run)
+		System.out.println("starting Lane");
+		while(true)
 		{
 			if (!this.QueueEmpty())
 			{
