@@ -10,6 +10,7 @@ public class LaneManager extends Thread {
 	private ArrayList<Lane> laneAry;
 	private Random generator;
 	private long time;
+	private int customersaddedcount;
 
 	// TODO: random short intervals to produce customers.
 	public static void main(String[] args) {
@@ -37,6 +38,7 @@ public class LaneManager extends Thread {
 		laneAry = new ArrayList<Lane>();
 		this.buildLanes();
 		this.generator = new Random();
+		this.customersaddedcount = 0;
 
 	}
 
@@ -67,6 +69,7 @@ public class LaneManager extends Thread {
 
 			}
 			addCustomer(i);
+			this.customersaddedcount++;
 			System.out.println("Customer: " + i);
 		}
 		boolean allfinished = false;
@@ -143,6 +146,22 @@ public class LaneManager extends Thread {
 		} else
 			laneAry.get(lanetoaddto).AddtoLane(c);
 		return;
+	}
+
+	protected long getTime() {
+		return time;
+	}
+
+	protected void setTime(long time) {
+		this.time = time;
+	}
+
+	synchronized protected int getCustomersaddedcount() {
+		return customersaddedcount;
+	}
+
+	synchronized protected void setCustomersaddedcount(int customersaddedcount) {
+		this.customersaddedcount = customersaddedcount;
 	}
 
 }
