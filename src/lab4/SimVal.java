@@ -4,9 +4,9 @@ public class SimVal {
 
 	public int lanenum;
 	public int expresslanenum;
-	public int expresslaneitemlimit;
-	public int startofrange;
-	public int endofrange;
+	public int expresslaneitemlimit; 
+	public int startofrange; // express lane item limit
+	public int endofrange; //express lane item limit
 	public int customersnum;
 	public int cartsizemax;
 	public static void main(String[] args) {
