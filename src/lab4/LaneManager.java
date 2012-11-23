@@ -2,9 +2,9 @@ package lab4;
 
 public class LaneManager {
 
-	/**
-	 * @param args
-	 */
+	Boolean run;
+	SimVal val;
+	
 	
 	//TODO: random short intervals to produce customers.  
 	public static void main(String[] args) {
@@ -12,4 +12,9 @@ public class LaneManager {
 
 	}
 
+	public LaneManager(SimVal val)
+	{
+		this.val = val;
+	}
+	
 }
