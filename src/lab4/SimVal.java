@@ -13,3 +13,4 @@ public class SimVal {
 	}
 
 }
+//note can use .clone() method to make a hard copy
