@@ -4,8 +4,8 @@ import java.lang.Thread;
 public class Customer extends Thread {
 
 	private Cart cart;
-	private double starttime;
-	private double totaltime;
+	private long starttime;
+	private long totaltime;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -16,19 +16,19 @@ public class Customer extends Thread {
 		this.cart = new Cart(itemnum);
 	}
 
-	public synchronized double getStarttime() {
+	public synchronized long getStarttime() {
 		return starttime;
 	}
 
-	public synchronized void setStarttime(double starttime) {
+	public synchronized void setStarttime(long starttime) {
 		this.starttime = starttime;
 	}
 
-	public synchronized double getTotaltime() {
+	public synchronized long getTotaltime() {
 		return totaltime;
 	}
 
-	public synchronized void setTotaltime(double totaltime) {
+	public synchronized void setTotaltime(long totaltime) {
 		this.totaltime = totaltime;
 	}
 	public int size()

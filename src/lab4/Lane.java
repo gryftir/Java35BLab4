@@ -7,7 +7,7 @@ public class Lane extends Thread {
 
 	public final boolean Express;
 	private LinkedList<Customer> queue;
-	private double totallanetime;
+	private long totallanetime;
 	private int currentitems;
 	private Boolean run;
 
@@ -28,11 +28,11 @@ public class Lane extends Thread {
 		queue.addFirst(cust);
 	}
 
-	synchronized protected double getTotallanetime() {
+	synchronized protected long getTotallanetime() {
 		return totallanetime;
 	}
 
-	synchronized protected void setTotallanetime(double d) {
+	synchronized protected void setTotallanetime(long d) {
 		this.totallanetime = d;
 	}
 
@@ -76,6 +76,10 @@ synchronized public boolean QueueEmpty()
 synchronized public Customer pollLast()
 {
 	return this.queue.pollLast();
+}
+
+protected boolean isExpress() {
+	return Express;
 }
 }
 // customer.start();
