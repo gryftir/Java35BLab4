@@ -6,6 +6,7 @@ public class Customer extends Thread {
 	private Cart cart;
 	private long starttime;
 	private long totaltime;
+	private int customernumber;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -38,13 +39,21 @@ public class Customer extends Thread {
 	
 	public void run()
 	{
+		System.out.println("running Customer");
 		try{
-			Thread.sleep(500 * cart.size());
+			Thread.sleep(250 * cart.size());
 		}
 		catch (InterruptedException e)
 		{
 			e.printStackTrace();
 		}
 		this.setTotaltime(System.currentTimeMillis() - this.getStarttime());
+		System.out.println("finished Customer: " + this.getCustomernumber());
+	}
+	protected int getCustomernumber() {
+		return customernumber;
+	}
+	protected void setCustomernumber(int customernumber) {
+		this.customernumber = customernumber;
 	}	
 }
