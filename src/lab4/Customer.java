@@ -36,5 +36,15 @@ public class Customer extends Thread {
 		return cart.size();
 	}
 	
-	
+	public void run()
+	{
+		try{
+			Thread.sleep(500 * cart.size());
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		this.setTotaltime(System.currentTimeMillis() - this.getStarttime());
+	}	
 }
