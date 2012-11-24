@@ -29,8 +29,8 @@ public class SimulationManager {
 		int sessioncount = this.val.endofrange - this.val.startofrange + 1;
 		for (int index = 0; this.val.expresslaneitemlimit <= this.val.endofrange; this.val.expresslaneitemlimit++, index++)
 		{
-			
-			SessionManager sm = new SessionManager(val);
+			//note if I do this concurrently, clone val edit: done
+			SessionManager sm = new SessionManager(val.clone());
 			sm.start();
 			while (!sm.isFinished())
 			{
