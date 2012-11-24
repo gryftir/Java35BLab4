@@ -1,14 +1,14 @@
 package lab4;
 
-import javax.swing.*;
-import java.awt.*;
 
-public class SessionManager extends SwingWorker<Void, Void> {
+public class SessionManager extends Thread {
 
 	private LaneManager lm;
 	private SimVal val;
-	private int customeraddedcount;
+	private int customerprocessedcount;
 	private long time;
+	private int progress;
+	private boolean finished;
 
 	public static void main(String[] args) {
 
@@ -16,31 +16,33 @@ public class SessionManager extends SwingWorker<Void, Void> {
 
 	public SessionManager(SimVal val) {
 		this.lm = new LaneManager(val);
-		this.customeraddedcount = 0;
+		this.customerprocessedcount = 0;
 	}
 
-	public long runLanes() {
+	public void run() {
+		this.setFinished(false);
 		lm.runLanes();
 		while (lm.getTime() == 0) {
-			setCustomeraddedcount(lm.getCustomersaddedcount());
+			setCustomerprocessedcount(lm.getCustomersprocessedcount());
+			setProgress(this.getCustomerprocessedcount()/val.customersnum);
 		}
-		return lm.getTime();
+		this.setFinished(true);
 	}
 
-	 protected synchronized int getCustomeraddedcount() {
-		return customeraddedcount;
+	 protected synchronized int getCustomerprocessedcount() {
+		return customerprocessedcount;
 	}
 
-	synchronized protected void setCustomeraddedcount(int customeraddedcount) {
-		this.customeraddedcount = customeraddedcount;
+	synchronized protected void setCustomerprocessedcount(int customeraddedcount) {
+		this.customerprocessedcount = customeraddedcount;
 	}
 
 	protected Void doInBackground() throws Exception {
 		lm.runLanes();
 		while (lm.getTime() == 0) {
 	
-				setCustomeraddedcount(lm.getCustomersaddedcount());
-				setProgress(this.getCustomeraddedcount()/val.customersnum);
+				setCustomerprocessedcount(lm.getCustomersprocessedcount());
+				setProgress(this.getCustomerprocessedcount()/val.customersnum);
 			}
 		setTime(lm.getTime());
 		return null;
@@ -53,5 +55,22 @@ public class SessionManager extends SwingWorker<Void, Void> {
 	protected synchronized void setTime(long time) {
 		this.time = time;
 	}
+
+	protected synchronized int getProgress() {
+		return progress;
+	}
+
+	protected synchronized void setProgress(int progress) {
+		this.progress = progress;
+	}
+
+	protected synchronized boolean isFinished() {
+		return finished;
+	}
+
+	protected synchronized void setFinished(boolean finished) {
+		this.finished = finished;
+	}
+	
 
 }

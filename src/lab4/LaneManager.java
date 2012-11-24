@@ -10,7 +10,7 @@ public class LaneManager extends Thread {
 	private ArrayList<Lane> laneAry;
 	private Random generator;
 	private long time;
-	private int customersaddedcount;
+	private int customersprocessedcount;
 
 	// TODO: random short intervals to produce customers.
 	public static void main(String[] args) {
@@ -38,7 +38,7 @@ public class LaneManager extends Thread {
 		laneAry = new ArrayList<Lane>();
 		this.buildLanes();
 		this.generator = new Random();
-		this.customersaddedcount = 0;
+		this.customersprocessedcount = 0;
 
 	}
 
@@ -52,7 +52,16 @@ public class LaneManager extends Thread {
 			laneAry.add(i, new Lane(false));
 		}
 	}
-
+	 synchronized public int getLanesProccessedCount()
+	 {
+		 int size = laneAry.size();
+		 int count = 0;
+		 for (int i = 0; i <  size; i++)
+		 {
+			 count += laneAry.get(i).getCustomerprocessedcount();
+		 }
+		 return count;
+	 }
 	public void runLanes() {
 		long delay;
 		long start;
@@ -66,10 +75,9 @@ public class LaneManager extends Thread {
 			random = this.generator.nextInt(this.val.cartsizemax) + 1;
 			delay = random * 50;
 			while (start + delay > System.currentTimeMillis()) {
-
+			this.setCustomersprocessedcount(this.getLanesProccessedCount());	
 			}
 			addCustomer(i);
-			this.customersaddedcount++;
 			System.out.println("Customer: " + i);
 		}
 		boolean allfinished = false;
@@ -78,6 +86,7 @@ public class LaneManager extends Thread {
 			int count = this.val.lanenum;
 			for (int j = this.val.lanenum - 1; j >= 0; j--)
 			{
+				this.setCustomersprocessedcount(this.getLanesProccessedCount());
 				if (laneAry.get(j).QueueEmpty())
 				{
 					count--;
@@ -156,12 +165,12 @@ public class LaneManager extends Thread {
 		this.time = time;
 	}
 
-	synchronized protected int getCustomersaddedcount() {
-		return customersaddedcount;
+	synchronized protected int getCustomersprocessedcount() {
+		return customersprocessedcount;
 	}
 
-	synchronized protected void setCustomersaddedcount(int customersaddedcount) {
-		this.customersaddedcount = customersaddedcount;
+	synchronized protected void setCustomersprocessedcount(int customersaddedcount) {
+		this.customersprocessedcount = customersaddedcount;
 	}
 
 }

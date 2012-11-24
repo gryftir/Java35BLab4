@@ -9,6 +9,7 @@ public class Lane extends Thread {
 	private LinkedList<Customer> queue;
 	private long totallanetime;
 	private int currentitems;
+	private int customerprocessedcount;
 
 	public static void main(String[] args) {
 		
@@ -18,6 +19,7 @@ public class Lane extends Thread {
 		this.Express = express;
 		this.queue = new LinkedList<Customer>();
 		this.totallanetime = 0;
+		this.customerprocessedcount = 0;
 	}
 
 	synchronized public void AddtoLane(Customer cust) {
@@ -61,7 +63,7 @@ synchronized void processCustomer()
 	{
 		System.out.println("error with processing total time from a customer.");
 	}
-	
+	this.setCustomerprocessedcount(this.getCustomerprocessedcount() + 1);
 	c = null;
 }
 public void run()
@@ -86,6 +88,14 @@ synchronized public Customer pollLast()
 
 protected boolean isExpress() {
 	return Express;
+}
+
+protected synchronized int getCustomerprocessedcount() {
+	return customerprocessedcount;
+}
+
+protected synchronized void setCustomerprocessedcount(int customerprocessedcount) {
+	this.customerprocessedcount = customerprocessedcount;
 }
 }
 // customer.start();

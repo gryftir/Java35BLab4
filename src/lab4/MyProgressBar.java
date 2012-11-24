@@ -38,5 +38,11 @@ public class MyProgressBar extends JPanel {
 		frame.pack();
 		frame.setVisible(true);
 	}
+	protected synchronized int getProgress() {
+		return progress;
+	}
+	protected synchronized void setProgress(int progress) {
+		this.progress = progress;
+	}
 	
 }
