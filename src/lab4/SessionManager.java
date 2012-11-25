@@ -11,20 +11,31 @@ public class SessionManager extends Thread {
 	private boolean finished;
 
 	public static void main(String[] args) {
-
+		SimVal val = new SimVal();
+		val.cartsizemax = 20;
+		val.customersnum = 10;
+		val.expresslaneitemlimit = 7;
+		val.expresslanenum = 2;
+		val.lanenum = 10;
+		val.startofrange = 5;
+		val.endofrange = 10;
+		SessionManager sm = new SessionManager(val);
+		sm.start();
+		
 	}
 
 	public SessionManager(SimVal val) {
 		this.lm = new LaneManager(val);
 		this.customerprocessedcount = 0;
+		this.val = val;
 	}
 
 	public void run() {
 		this.setFinished(false);
-		lm.runLanes();
+		lm.start();
 		while (lm.getTime() == 0) {
 			setCustomerprocessedcount(lm.getCustomersprocessedcount());
-			setProgress(this.getCustomerprocessedcount()/val.customersnum);
+			setProgress((int)(getCustomerprocessedcount()/(float)this.val.customersnum * 100));
 		}
 		this.setFinished(true);
 	}
@@ -38,7 +49,7 @@ public class SessionManager extends Thread {
 	}
 
 	protected Void doInBackground() throws Exception {
-		lm.runLanes();
+		lm.start();
 		while (lm.getTime() == 0) {
 	
 				setCustomerprocessedcount(lm.getCustomersprocessedcount());

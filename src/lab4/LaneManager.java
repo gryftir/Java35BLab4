@@ -24,7 +24,7 @@ public class LaneManager extends Thread {
 		val.startofrange = 5;
 		val.endofrange = 10;
 		LaneManager lm = new LaneManager(val);
-		lm.runLanes();
+		lm.run();
 		while (lm.time == 0)
 		{
 			
@@ -62,7 +62,7 @@ public class LaneManager extends Thread {
 		 }
 		 return count;
 	 }
-	public void runLanes() {
+	public void run() {
 		long delay;
 		long start;
 		int random;
