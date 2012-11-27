@@ -73,7 +73,7 @@ public class LaneManager extends Thread {
 		for (int i = 0; i < this.val.customersnum; i++) {
 			start = System.currentTimeMillis();
 			random = this.generator.nextInt(this.val.cartsizemax) + 1;
-			delay = random * 50;
+			delay = random * 20;
 			while (start + delay > System.currentTimeMillis()) {
 			this.setCustomersprocessedcount(this.getLanesProccessedCount());	
 			}
@@ -98,8 +98,10 @@ public class LaneManager extends Thread {
 		long time = 0;
 		for (int i = 0; i < laneAry.size(); i++) {
 			time += laneAry.get(i).getTotallanetime();
+			laneAry.get(i).setStop(true);
 		}
 		this.time = time;
+		
 		return;
 	}
 

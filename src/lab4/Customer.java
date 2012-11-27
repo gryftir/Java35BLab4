@@ -41,7 +41,7 @@ public class Customer extends Thread {
 	{
 		System.out.println("running Customer");
 		try{
-			Thread.sleep(250 * cart.size());
+			Thread.sleep(50 * cart.size());
 		}
 		catch (InterruptedException e)
 		{

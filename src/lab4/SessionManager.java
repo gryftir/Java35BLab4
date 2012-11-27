@@ -37,6 +37,7 @@ public class SessionManager extends Thread {
 			setCustomerprocessedcount(lm.getCustomersprocessedcount());
 			setProgress((int)(getCustomerprocessedcount()/(float)this.val.customersnum * 100));
 		}
+		this.setTime(lm.getTime());
 		this.setFinished(true);
 	}
 

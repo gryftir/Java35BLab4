@@ -6,31 +6,32 @@ import javax.swing.SwingWorker;
 
 public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 
-	MyProgressBar pb;
-	SimVal val;
-
+	private MyProgressBar pb;
+	private SimVal val;
+	private ArrayList<SessionManager> smary;
+	private ArrayList<Long> values;
+	private boolean finished;
 	
 	public static void main(String[] args) {
 		SimVal val = new SimVal();
 		val.cartsizemax = 20;
-		val.customersnum = 10;
+		val.customersnum = 20;
 		val.expresslaneitemlimit = 7;
 		val.expresslanenum = 2;
 		val.lanenum = 10;
-		val.startofrange = 5;
+		val.startofrange = 9;
 		val.endofrange = 10;
 	SimulationManager sm = new SimulationManager(val);
-	ArrayList<Long> list =  sm.runSim();
-	for (int i = 0; i < list.size(); i++)
+	sm.runSim();
+	for (int i = 0; i < sm.values.size(); i++)
 	{ 
-		System.out.println (list.get(i));
+		System.out.println (sm.values.get(i));
 	}
 
 	}
-	protected ArrayList<Long> runSim()
+	protected void runSim()
 	{
 		this.val.expresslaneitemlimit = this.val.startofrange;
-		ArrayList<Long> values = new ArrayList<Long>();
 		pb = new MyProgressBar();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() 
 		{
@@ -39,33 +40,74 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 				pb.runProgressBar();
 			}
 		});
-		int sessioncount = this.val.endofrange - this.val.startofrange + 1;
 		for (int index = 0; this.val.expresslaneitemlimit <= this.val.endofrange; this.val.expresslaneitemlimit++, index++)
 		{
 			//note if I do this concurrently, clone val edit: done
-			SessionManager sm = new SessionManager(val.clone());
-			sm.start();
-			while (!sm.isFinished())
-			{
-				System.out.println ("index: " + index + " sm.getProgress(): " + sm.getProgress() + " " + sessioncount);
-				pb.setProgress((int)( (index/(float)sessioncount * 100) + (sm.getProgress()/(float)sessioncount  ) )); //I may need to check this to make sure it works.  May be easier to run all threads simultaneously, and poll them all in a loop
-				//System.out.println("current progress is: " + sm.getProgress());
-			}
-			Long l = new Long(sm.getTime());
-			values.add(index, l);	
-			sm = null;
+			smary.add(index, new SessionManager(val.clone()));
+			smary.get(index).start();
 		}
-		return values;
+		while (!this.allsessionfinished())
+		{	
+			pb.setProgress(sessionprogress()); //I may need to check this to make sure it works.  May be easier to run all threads simultaneously, and poll them all in a loop
+			//System.out.println("current progress is: " + sm.getProgress());
+		}
+		for (int index = 0; index < smary.size(); index++)
+		{
+			Long l =smary.get(index).getTime();
+			values.add(index, l);
+		}	
 	}
 	public SimulationManager(SimVal val)
 	{
 		this.val = val;
+		this.smary = new ArrayList<SessionManager>();
+		this.values = new ArrayList<Long>();
+		this.finished = false;
 		
 	}
 	@Override
 	protected ArrayList<Long> doInBackground() throws Exception {
-		// TODO Auto-generated method stub
+		this.runSim();
 		return null;
 	}
-	
+	public boolean allsessionfinished()
+	{
+		boolean finished = true;
+		int index = 0;
+		while ((index < smary.size()) && finished == true)
+		{
+			if (!(smary.get(index).isFinished()))
+			{
+				finished = false;
+			}
+			index++;
+		}
+		this.setFinished(true);
+			return finished;
+	}
+	 int sessionprogress()
+	{
+		int progress = 0;
+		for (int index = 0; index < smary.size(); index++)
+		{
+			progress += smary.get(index).getProgress();
+		}
+		return progress/smary.size();
+	}
+	protected ArrayList<Long> getValues() {
+		return values;
+	}
+	protected void setValues(ArrayList<Long> values) {
+		this.values = values;
+	}
+	protected boolean isFinished() {
+		return finished;
+	}
+	protected void setFinished(boolean finished) {
+		this.finished = finished;
+	}
+	synchronized protected void setProg(int number)
+	{
+		pb.setProgress(number);
+	}
 }

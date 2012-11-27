@@ -10,6 +10,7 @@ public class Lane extends Thread {
 	private long totallanetime;
 	private int currentitems;
 	private int customerprocessedcount;
+	private boolean stop = false;
 
 	public static void main(String[] args) {
 		
@@ -69,7 +70,7 @@ synchronized void processCustomer()
 public void run()
 {
 		System.out.println("starting Lane");
-		while(true)
+		while(!stop)
 		{
 			if (!this.QueueEmpty())
 			{
@@ -96,6 +97,10 @@ protected synchronized int getCustomerprocessedcount() {
 
 protected synchronized void setCustomerprocessedcount(int customerprocessedcount) {
 	this.customerprocessedcount = customerprocessedcount;
+}
+
+protected void setStop(boolean stop) {
+	this.stop = stop;
 }
 }
 // customer.start();
