@@ -174,5 +174,10 @@ public class LaneManager extends Thread {
 	synchronized protected void setCustomersprocessedcount(int customersaddedcount) {
 		this.customersprocessedcount = customersaddedcount;
 	}
+	protected void stopLanes()
+	{
+		for (int index = 0; index < laneAry.size(); index++)
+			laneAry.get(index).setStop(true);
+	}
 
 }

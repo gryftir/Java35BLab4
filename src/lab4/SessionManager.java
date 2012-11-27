@@ -57,9 +57,9 @@ public class SessionManager extends Thread {
 				setProgress(this.getCustomerprocessedcount()/val.customersnum);
 			}
 		setTime(lm.getTime());
+		lm.stopLanes();
 		return null;
 	}
-
 	protected synchronized long getTime() {
 		return time;
 	}

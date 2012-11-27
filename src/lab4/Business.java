@@ -2,7 +2,9 @@ package lab4;
 
 import java.util.ArrayList;
 
-public class Business extends Thread {
+import javax.swing.SwingWorker;
+
+public class Business extends SwingWorker<Void, Void> {
 
 	private SimVal val;
 	private SimulationManager sm;
@@ -21,12 +23,13 @@ public class Business extends Thread {
 		val.endofrange = 10;
 		Business b = new Business(val);
 		b.run();
+		
 		//for (int index = 0; index < l.size(); index++)
 		//{
 		//	System.out.println(l.get(index));
 		//}
 	}
-	public void run ()
+	public Void doInBackground()
 	{
 		sm.runSim();
 		while(sm.allsessionfinished())
@@ -34,7 +37,7 @@ public class Business extends Thread {
 		}
 		this.data.setTimingresults(sm.getValues());
 		this.setFinished(true);
-		return;
+		return null;
 	}
 	protected Business(SimVal val) {
 		this.val = val;
@@ -46,6 +49,10 @@ public class Business extends Thread {
 	}
 	protected void setFinished(boolean finished) {
 		this.finished = finished;
+	}
+	protected void setProg(int number)
+	{
+		this.setProgress(number);
 	}
 	
 
