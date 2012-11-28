@@ -28,9 +28,15 @@ public class Business extends Thread {
 	}
 	public void run ()
 	{
-		sm.runSim();
-		while(sm.allsessionfinished())
+		sm.execute();
+		while(!sm.isFinished())
 		{
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		this.data.setTimingresults(sm.getValues());
 		this.setFinished(true);
@@ -47,6 +53,37 @@ public class Business extends Thread {
 	protected void setFinished(boolean finished) {
 		this.finished = finished;
 	}
-	
+	protected ArrayList<Long> getResults()
+	{
+		return this.data.getTimingresults();
+	}
+	protected ArrayList<Integer> getLimits()
+	{
+		return this.data.getExpresslanelimits();
+	}
+	protected int indexoffastestlane()
+	{
+		ArrayList<Long> results = this.data.getTimingresults();
+		int size = results.size();
+		Long minval = results.get(0);
+		int minvalindex = 0;
+		for (int index = 1; index < size; index++)
+		{
+			if (results.get(index) < minval)
+			{
+				minval = results.get(index);
+				minvalindex = index;
+			}
+		}
+		return minvalindex;
+	}
+	protected ArrayList<Integer> getExpresslanelimits() {
+		return this.data.getExpresslanelimits();
+	}
+
+
+	protected ArrayList<Long> getTimingresults() {
+		return this.data.getTimingresults();
+	}
 
 }

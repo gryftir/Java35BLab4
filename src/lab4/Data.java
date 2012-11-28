@@ -14,6 +14,7 @@ SimVal val;
 	}
 
 	protected Data(SimVal val) {
+		this.val = val;
 		this.expresslanelimits = new ArrayList<Integer>();
 		int rangeval = this.val.startofrange; 
 		for (int index = 0; index < (this.val.endofrange - this.val.startofrange + 1); index++, rangeval++)

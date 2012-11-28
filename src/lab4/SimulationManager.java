@@ -48,6 +48,12 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 		}
 		while (!this.allsessionfinished())
 		{	
+			/*try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 			pb.setProgress(sessionprogress()); //I may need to check this to make sure it works.  May be easier to run all threads simultaneously, and poll them all in a loop
 			//System.out.println("current progress is: " + sm.getProgress());
 		}
@@ -56,6 +62,8 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 			Long l =smary.get(index).getTime();
 			values.add(index, l);
 		}	
+		this.setFinished(true);
+		
 	}
 	public SimulationManager(SimVal val)
 	{
@@ -82,7 +90,6 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 			}
 			index++;
 		}
-		this.setFinished(true);
 			return finished;
 	}
 	 int sessionprogress()

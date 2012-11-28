@@ -126,5 +126,6 @@ public class MyProgressBar extends JPanel implements PropertyChangeListener {
 		{
 			this.jf.setVisible(aFlag);
 		}
+		
 	
 }

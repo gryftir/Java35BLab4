@@ -2,6 +2,7 @@ package lab4;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 public class UI extends JPanel implements ActionListener {
 
 	
@@ -27,7 +28,14 @@ public class UI extends JPanel implements ActionListener {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-	UI u = new UI();
+		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() 
+		{
+			public void run() 
+			{
+				UI ui = new UI();
+			}
+		});
 
 	}
 	
@@ -74,10 +82,38 @@ public void actionPerformed(ActionEvent e)
 	num.endofrange = Integer.parseInt(endofrange.getText());
 	num.customersnum = Integer.parseInt(customersnum.getText());
 	num.cartsizemax = Integer.parseInt(cartsizemax.getText());
-	val = num;
+	val = new SimVal(num);
+	/*System.out.println(val.lanenum);
+	System.out.println(val.expresslanenum);
+	System.out.println(val.startofrange); 
+	System.out.println(val.endofrange); 
+	System.out.println(val.customersnum); 
+	System.out.println(val.cartsizemax); */
 	biz = new Business(val);
 	jf.setVisible(false);
 	biz.run();
+	while (!biz.isFinished())
+	{
+	}
+	ArrayList<Long> results = this.biz.getResults();
+	ArrayList<Integer> limits = this.biz.getLimits();
+	int size = limits.size();
+	int fastestindex = this.biz.indexoffastestlane();
+	int index;
+	for (index = 0; index < fastestindex; index++)
+	{
+		System.out.println("Express Lane Item Limit: " + limits.get(index) + " Completion time of session in Milliseconds: " + results.get(index));
+	}
+	System.out.println("		Fastest Session");
+	System.out.println("-------------------------------------------");
+	System.out.println("Express Lane Item Limit: " + limits.get(index) + " Completion time of session in Milliseconds: " + results.get(index));
+	System.out.println("-------------------------------------------");
+	for (index++; index < size; index++)
+	{
+		System.out.println("Express Lane Item Limit: " + limits.get(index) + " Completion time of session in Milliseconds: " + results.get(index));
+	}
+	System.out.println("Program Finished");
+	System.exit(0);
 }
 	
 
