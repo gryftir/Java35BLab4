@@ -8,6 +8,7 @@ public class Business extends Thread {
 	private SimulationManager sm;
 	private boolean finished = false;
 	private Data data;
+	private UI ui;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -32,11 +33,13 @@ public class Business extends Thread {
 		while(!sm.isFinished())
 		{
 			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Thread.sleep(10);
+			ui.setProgress();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			ui.setProgress();
 		}
 		this.data.setTimingresults(sm.getValues());
 		this.setFinished(true);
@@ -46,6 +49,12 @@ public class Business extends Thread {
 		this.val = val;
 		this.sm = new SimulationManager(val);
 		this.data = new Data(val);
+	}
+	protected Business(SimVal val, UI ui) {
+		this.val = val;
+		this.sm = new SimulationManager(val);
+		this.data = new Data(val);
+		this.ui = ui;
 	}
 	protected boolean isFinished() {
 		return finished;
@@ -84,6 +93,10 @@ public class Business extends Thread {
 
 	protected ArrayList<Long> getTimingresults() {
 		return this.data.getTimingresults();
+	}
+	protected SimulationManager getsim()
+	{
+		return this.sm;
 	}
 
 }

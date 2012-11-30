@@ -11,6 +11,7 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 	private ArrayList<SessionManager> smary;
 	private ArrayList<Long> values;
 	private boolean finished;
+	private int progress;
 	
 	public static void main(String[] args) {
 		SimVal val = new SimVal();
@@ -32,14 +33,14 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 	protected void runSim()
 	{
 		this.val.expresslaneitemlimit = this.val.startofrange;
-		pb = new MyProgressBar();
+		/*pb = new MyProgressBar();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() 
 		{
 			public void run() 
 			{
 				pb.runProgressBar();
 			}
-		});
+		});*/
 		for (int index = 0; this.val.expresslaneitemlimit <= this.val.endofrange; this.val.expresslaneitemlimit++, index++)
 		{
 			//note if I do this concurrently, clone val edit: done
@@ -48,13 +49,15 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 		}
 		while (!this.allsessionfinished())
 		{	
+			
 			/*try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}*/
-			pb.setProgress(sessionprogress()); //I may need to check this to make sure it works.  May be easier to run all threads simultaneously, and poll them all in a loop
+			this.setProgress(sessionprogress());
+			//pb.setProgress(sessionprogress()); //I may need to check this to make sure it works.  May be easier to run all threads simultaneously, and poll them all in a loop
 			//System.out.println("current progress is: " + sm.getProgress());
 		}
 		for (int index = 0; index < smary.size(); index++)
@@ -92,14 +95,21 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 		}
 			return finished;
 	}
-	 int sessionprogress()
+	 protected int sessionprogress()
 	{
 		int progress = 0;
 		for (int index = 0; index < smary.size(); index++)
 		{
 			progress += smary.get(index).getProgress();
 		}
-		return progress/smary.size();
+		if (smary != null)
+		{
+			if (smary.size() == 0)
+				return 0;
+			else
+			return progress/smary.size();
+		}
+		return 0;
 	}
 	protected ArrayList<Long> getValues() {
 		return values;
@@ -117,4 +127,5 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 	{
 		pb.setProgress(number);
 	}
+	
 }
