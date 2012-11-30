@@ -100,11 +100,12 @@ public class MyProgressBar extends JPanel implements PropertyChangeListener {
 		jp.setOpaque(true);
 		jf.setSize(400,100);
 		jf.add(jp);
+		jp.setVisible(true);
 		//jf.pack();
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-		//task = new Task();
-		//task.addPropertyChangeListener(this);
-		//task.execute();
+		task = new Task();
+		task.addPropertyChangeListener(this);
+		task.execute();
 	}
 	
 	protected int getProgress() {
@@ -115,14 +116,14 @@ public class MyProgressBar extends JPanel implements PropertyChangeListener {
 		else return -1;
 	}
 	protected void setProgress(int progress) {
-	/*	if (task != null)
+	if (task != null)
 		{
 			task.setProg(progress);
-		}*/
-		progressBar.setValue(progress);
-		progressBar.repaint();
-		jf.repaint();
-		this.repaint();
+		}
+		//progressBar.setValue(progress);
+	//	progressBar.repaint();
+	//	jf.repaint();
+	//	this.repaint();
 	}
 		public void setVis(boolean aFlag)
 		{
