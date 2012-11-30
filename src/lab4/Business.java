@@ -44,7 +44,7 @@ public class Business extends Thread {
 	}
 	protected Business(SimVal val) {
 		this.val = val;
-		this.sm = new SimulationManager(val);
+		this.sm = new SimulationManager(this.val);
 		this.data = new Data(val);
 	}
 	protected boolean isFinished() {
@@ -84,6 +84,9 @@ public class Business extends Thread {
 
 	protected ArrayList<Long> getTimingresults() {
 		return this.data.getTimingresults();
+	}
+	protected int getProgress() {
+		return sm.getProgress();
 	}
 
 }

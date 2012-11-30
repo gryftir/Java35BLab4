@@ -32,14 +32,7 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 	protected void runSim()
 	{
 		this.val.expresslaneitemlimit = this.val.startofrange;
-		pb = new MyProgressBar();
-		javax.swing.SwingUtilities.invokeLater(new Runnable() 
-		{
-			public void run() 
-			{
-				pb.runProgressBar();
-			}
-		});
+		
 		for (int index = 0; this.val.expresslaneitemlimit <= this.val.endofrange; this.val.expresslaneitemlimit++, index++)
 		{
 			//note if I do this concurrently, clone val edit: done
@@ -54,7 +47,7 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}*/
-			pb.setProgress(sessionprogress()); //I may need to check this to make sure it works.  May be easier to run all threads simultaneously, and poll them all in a loop
+			//I may need to check this to make sure it works.  May be easier to run all threads simultaneously, and poll them all in a loop
 			//System.out.println("current progress is: " + sm.getProgress());
 		}
 		for (int index = 0; index < smary.size(); index++)

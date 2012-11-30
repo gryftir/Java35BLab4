@@ -79,34 +79,32 @@ public class MyProgressBar extends JPanel implements PropertyChangeListener {
 			if (progress == 100)
 			{
 				//delay approxximately 10 seconds, then hide the progress bar
-				long start = System.currentTimeMillis();
-				while (start + 10000 < System.currentTimeMillis())
-				{
+				//long start = System.currentTimeMillis();
+				//while (start + 10000 < System.currentTimeMillis())
+				//{
 					
-				}
+				//}
 				//this.setVis(false);
 			}
 		}
 	}
-	protected void runProgressBar()
+	protected void runProgressBar(JFrame jframe)
 	{
 	
 		// Create and set up the content pane.
 		JPanel jp = new JPanel();
-		jf = new JFrame("Progress Bar");
-		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.jf = jframe;
+		this.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jp.add(progressBar, BorderLayout.PAGE_START);
-		//jp.pack();
 		jp.setVisible(true);
 		jp.setOpaque(true);
 		jf.setSize(400,100);
 		jf.add(jp);
 		//jf.pack();
-		jf.setVisible(true);
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-		task = new Task();
-		task.addPropertyChangeListener(this);
-		task.execute();
+		//task = new Task();
+		//task.addPropertyChangeListener(this);
+		//task.execute();
 	}
 	
 	protected int getProgress() {
@@ -117,10 +115,14 @@ public class MyProgressBar extends JPanel implements PropertyChangeListener {
 		else return -1;
 	}
 	protected void setProgress(int progress) {
-		if (task != null)
+	/*	if (task != null)
 		{
 			task.setProg(progress);
-		}
+		}*/
+		progressBar.setValue(progress);
+		progressBar.repaint();
+		jf.repaint();
+		this.repaint();
 	}
 		public void setVis(boolean aFlag)
 		{
