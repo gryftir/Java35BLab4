@@ -22,7 +22,7 @@ public class UI extends JPanel implements ActionListener,  PropertyChangeListene
 	private JTextField error = new JTextField("");
 	private SimVal val;
 	private JPanel p1;
-	private JPanel p2;
+	//private JPanel p2;
 	private JFrame jf;
 	private Business biz;
 	private JProgressBar pb = new JProgressBar(0,100);
@@ -35,6 +35,7 @@ public class UI extends JPanel implements ActionListener,  PropertyChangeListene
 		{
 			public void run() 
 			{
+				@SuppressWarnings("unused")
 				UI ui = new UI();
 			}
 		});
@@ -113,7 +114,7 @@ public void actionPerformed(ActionEvent e)
 	
 	ArrayList<Long> results = this.biz.getResults();
 	ArrayList<Integer> limits = this.biz.getLimits();
-	int i =  JOptionPane.showOptionDialog(this.jf, new DataGraph(), "Test" , JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object [ ] { "End Program" }, 1);
+	int i =  JOptionPane.showOptionDialog(this.jf, new DataGraph(results,limits), "Test" , JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object [ ] { "End Program" }, 1);
 	System.exit(0);
 	int size = limits.size();
 	int fastestindex = this.biz.indexoffastestlane();
@@ -131,7 +132,7 @@ public void actionPerformed(ActionEvent e)
 		System.out.println("Express Lane Item Limit: " + limits.get(index) + " Completion time of session in Milliseconds: " + results.get(index));
 	}
 	System.out.println("Program Finished");
-	//System.exit(0);
+	System.exit(0);
 }
 
 @Override

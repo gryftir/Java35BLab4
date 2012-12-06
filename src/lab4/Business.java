@@ -47,7 +47,7 @@ public class Business extends Thread {
 	}
 	protected Business(SimVal val) {
 		this.val = val;
-		this.sm = new SimulationManager(val);
+		this.sm = new SimulationManager(this.val);
 		this.data = new Data(val);
 	}
 	protected Business(SimVal val, UI ui) {

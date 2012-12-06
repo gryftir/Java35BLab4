@@ -11,7 +11,6 @@ public class SimulationManager extends SwingWorker<ArrayList<Long>, Void>{
 	private ArrayList<SessionManager> smary;
 	private ArrayList<Long> values;
 	private boolean finished;
-	private int progress;
 	
 	public static void main(String[] args) {
 		SimVal val = new SimVal();
